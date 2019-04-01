@@ -1,0 +1,40 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Documents</h1>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>Document Name</th>
+      <th>File Name</th>
+      <th>Download Link</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @documents.each do |document| %>
+      <tr>
+        <td><%= document.name %></td>
+        <td>
+          <% if document.file.attached? %>
+          <%= document.file.filename %>
+          <% end %>
+        </td>
+        <td>
+        <% if document.file.attached? %>
+        <%= link_to document.file.filename, rails_blob_path(document.file, disposition: 'attachment') %>
+        <% end %>
+        </td>
+        <td><%= link_to 'Show', document %>
+        <%= link_to 'Edit', edit_document_path(document) %>
+        <%= link_to 'Destroy', document, method: :delete, data: { confirm: 'Are you sure?' } %>
+        <%= link_to 'Delete file', delete_document_file_path(document), method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Document', new_document_path %>

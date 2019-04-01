@@ -1,0 +1,44 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Animals</h1>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Image</th>
+      <th>Download Link</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @animals.each do |animal| %>
+      <tr>
+        <td><%= animal.name %></td>
+        <td> 
+          <% if animal.avatar.attached? %>
+            <%= image_tag url_for(animal.avatar), size: "160x100" %> 
+          <% else %>
+            No image
+          <% end %>
+        </td>
+        <td>
+        <% if animal.avatar.attached? %>
+        <%= link_to animal.avatar.filename, rails_blob_path(animal.avatar, disposition: 'attachment') %>
+        <% end %>
+        </td>
+        <td><%= link_to 'Show', animal %>
+          <%= link_to 'Edit', edit_animal_path(animal) %>
+          <%= link_to 'Destroy', animal, method: :delete, data: { confirm: 'Are you sure?' } %>
+          <%= link_to 'Delete Image', delete_animal_image_path(animal), method: :delete, data: { confirm: 'Are you sure?' } %>
+        </td>
+        
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Animal', new_animal_path %>

@@ -1,0 +1,43 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Companies</h1>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Preview</th>
+      <th>Download Link</td>
+      <th>Actions</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @companies.each do |company| %>
+      <tr>
+      
+        <td><%= company.name %></td>
+        <td></td>
+        <td></td>
+        <td><%= link_to 'Show', company %>
+        <%= link_to 'Edit', edit_company_path(company) %>
+        <%= link_to 'Destroy', company, method: :delete, data: { confirm: 'Are you sure?' } %>
+        <%= link_to 'Delete all images', delete_all_company_images_path(company), method: :delete, data: { confirm: 'Are you sure?' } %>
+        </td>
+      </tr>
+      <% company.images.each do |image| %>
+        <tr>
+        <td></td>
+          <td>  <%= image_tag url_for(image), size: "160x100" %></td> 
+          <td>  <%= link_to image.filename, rails_blob_path(image, disposition: 'attachment') %> </td>  
+          <td><%= link_to 'Delete Image', delete_single_company_image_path(company,image), method: :delete, data: { confirm: 'Are you sure?' } %></td>
+          
+        </tr>
+      <% end %>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Company', new_company_path %>

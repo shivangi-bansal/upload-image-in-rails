@@ -1,0 +1,33 @@
+<%= form_with(model: animal, local: true) do |form| %>
+  <% if animal.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(animal.errors.count, "error") %> prohibited this animal from being saved:</h2>
+
+      <ul>
+      <% animal.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :name %>
+    <%= form.text_field :name %>
+  </div>
+
+  <div class="field">
+    <%= form.label :avatar %> <sup>Can upload single image</sup>
+    <%= form.file_field :avatar, :accept => "image/png,image/gif,image/jpeg" %>
+  </div>
+
+  <% if form.object.avatar.attached? %>
+    <div class="field">
+      <%= image_tag form.object.avatar, size: "160x100" %>
+    </div>
+  <% end %>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>
